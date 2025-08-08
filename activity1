@@ -1,0 +1,56 @@
+using System;
+
+public class AgeValidator
+{
+    public static void Main(string[] args)
+    {
+        // Declare an integer array for 5 ages
+        int[] ages = new int[5];
+        int teenagerCount = 0;
+
+        // Use a loop to input each age
+        for (int i = 0; i < ages.Length; i++)
+        {
+            bool isValidAge = false;
+            while (!isValidAge)
+            {
+                Console.Write($"Enter the age of customer {i + 1}: ");
+                string input = Console.ReadLine();
+
+                if (int.TryParse(input, out int age))
+                {
+                    // Validate using if-else; re-prompt if invalid
+                    if (age >= 10 && age <= 99)
+                    {
+                        ages[i] = age;
+                        isValidAge = true;
+
+                        // Check if the age is a teenager
+                        if (age >= 13 && age <= 19)
+                        {
+                            teenagerCount++;
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid age. Please enter an age between 10 and 99.");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Invalid input. Please enter a valid integer.");
+                }
+            }
+        }
+
+        // Print the list of valid ages
+        Console.WriteLine("\nList of valid ages:");
+        for (int i = 0; i < ages.Length; i++)
+        {
+            Console.WriteLine($"Customer {i + 1}: {ages[i]}");
+        }
+
+        // Highlight how many were teenagers (13–19)
+        Console.WriteLine($"\nNumber of teenagers (13-19): {teenagerCount}");
+    }
+}

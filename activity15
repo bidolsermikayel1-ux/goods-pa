@@ -1,0 +1,42 @@
+using System;
+using System.Collections.Generic;
+
+public class LuckyDraw
+{
+    public static void Main(string[] args)
+    {
+        // Predefined winning numbers.
+        List<int> winningNumbers = new List<int>() { 7, 23, 42, 65, 88 };
+
+        // Get user entries with input validation.
+        int[] userEntries = new int[20];
+        for (int i = 0; i < 20; i++)
+        {
+            Console.Write($"Enter lucky number for user {i + 1} (1-99): ");
+            while (!int.TryParse(Console.ReadLine(), out userEntries[i]) || userEntries[i] < 1 || userEntries[i] > 99)
+            {
+                Console.WriteLine("Invalid number. Please enter a number between 1 and 99.");
+            }
+        }
+
+        // Check for winners and display results.
+        CheckWinners(userEntries, winningNumbers);
+    }
+
+
+    static void CheckWinners(int[] entries, List<int> winningNumbers)
+    {
+        Console.WriteLine("\nLucky Draw Results:");
+        for (int i = 0; i < entries.Length; i++)
+        {
+            if (winningNumbers.Contains(entries[i]))
+            {
+                Console.WriteLine($"User {i + 1} wins! Lucky number: {entries[i]}");
+            }
+            else
+            {
+                Console.WriteLine($"User {i + 1}: Lucky number {entries[i]} - not a winner.");
+            }
+        }
+    }
+}

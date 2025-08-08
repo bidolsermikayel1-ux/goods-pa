@@ -1,0 +1,62 @@
+using System;
+using System.Collections.Generic;
+
+public class GradeConverter
+{
+    public static char GetGrade(float score)
+    {
+        if (score >= 90) return 'A';
+        else if (score >= 80) return 'B';
+        else if (score >= 70) return 'C';
+        else if (score >= 60) return 'D';
+        else return 'F';
+    }
+
+    public static void PrintFeedback(char grade)
+    {
+        switch (grade)
+        {
+            case 'A':
+                Console.WriteLine("Excellent work! Keep up the great effort.");
+                break;
+            case 'B':
+                Console.WriteLine("Good job! You're on the right track.");
+                break;
+            case 'C':
+                Console.WriteLine("Satisfactory performance. Consider focusing on areas for improvement.");
+                break;
+            case 'D':
+                Console.WriteLine("Needs improvement. Seek extra help or review the material.");
+                break;
+            case 'F':
+                Console.WriteLine("Failing grade. Significant improvement is needed. Please seek assistance.");
+                break;
+            default:
+                Console.WriteLine("Invalid grade.");
+                break;
+        }
+    }
+
+    public static void Main(string[] args)
+    {
+        List<float> scores = new List<float>();
+        Console.WriteLine("Enter 5 percentage scores:");
+
+        for (int i = 0; i < 5; i++)
+        {
+            float score;
+            while (!float.TryParse(Console.ReadLine(), out score) || score < 0 || score > 100)
+            {
+                Console.WriteLine("Invalid input. Please enter a number between 0 and 100:");
+            }
+            scores.Add(score);
+        }
+
+        foreach (float score in scores)
+        {
+            char grade = GetGrade(score);
+            Console.WriteLine($"Score: {score}, Grade: {grade}");
+            PrintFeedback(grade);
+        }
+    }
+}

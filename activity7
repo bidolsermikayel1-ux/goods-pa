@@ -1,0 +1,78 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+public class PollCounter
+{
+    public static Dictionary<string, int> CountVotes(string[] votes)
+    {
+        // Input validation: Check for null or empty input and correct length.
+        if (votes == null || votes.Length != 10)
+        {
+            throw new ArgumentException("Input must be an array of 10 votes.");
+        }
+
+        // Dictionary to store vote counts (case-insensitive).
+        var voteCounts = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
+        voteCounts["CandidateA"] = 0;
+        voteCounts["CandidateB"] = 0;
+        voteCounts["CandidateC"] = 0;
+
+        int invalidVotes = 0;
+
+        // Count votes, handling invalid entries.
+        foreach (string vote in votes)
+        {
+            string cleanedVote = vote.Trim().ToLowerInvariant(); //Clean and lowercase for comparison.
+
+            if (voteCounts.ContainsKey(cleanedVote))
+            {
+                voteCounts[cleanedVote]++;
+            }
+            else
+            {
+                invalidVotes++;
+            }
+        }
+
+        // Find the winner.
+        string winner = voteCounts.OrderByDescending(x => x.Value).First().Key;
+
+
+        //Return a dictionary containing all results.
+        return new Dictionary<string, int>
+        {
+            { "CandidateA", voteCounts["CandidateA"] },
+            { "CandidateB", voteCounts["CandidateB"] },
+            { "CandidateC", voteCounts["CandidateC"] },
+            { "InvalidVotes", invalidVotes },
+            { "Winner", voteCounts.OrderByDescending(x => x.Value).First().Value } //Store the Winning Vote Count
+        };
+
+    }
+
+
+    public static void Main(string[] args)
+    {
+        // Example usage:
+        string[] votes = { "CandidateA", "candidateb", "CandidateC", "CandidateA", "candidateA", "CandidateB", "CandidateC", "  CandidateA  ", "candidateb", "Invalid" };
+
+        try
+        {
+            Dictionary<string, int> results = CountVotes(votes);
+
+            Console.WriteLine("Vote Counts:");
+            Console.WriteLine($"CandidateA: {results["CandidateA"]}");
+            Console.WriteLine($"CandidateB: {results["CandidateB"]}");
+            Console.WriteLine($"CandidateC: {results["CandidateC"]}");
+            Console.WriteLine($"Invalid Votes: {results["InvalidVotes"]}");
+            Console.WriteLine($"Winner: {results.First(x => x.Key == "CandidateA").Value}"); //This is a more robust way to display the winner's name.
+
+
+        }
+        catch (ArgumentException ex)
+        {
+            Console.WriteLine($"Error: {ex.Message}");
+        }
+    }
+}

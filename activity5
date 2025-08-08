@@ -1,0 +1,48 @@
+using System;
+
+public class NumberRangeChecker
+{
+    public static void Main(string[] args)
+    {
+        int[] numbers = new int[10];
+        int evenCount = 0;
+        int oddCount = 0;
+        int divisibleBy5Count = 0;
+
+        Console.WriteLine("Enter 10 integers:");
+
+        for (int i = 0; i < 10; i++)
+        {
+            while (true)
+            {
+                Console.Write($"Enter integer {i + 1}: ");
+                if (int.TryParse(Console.ReadLine(), out numbers[i]))
+                {
+                    break;
+                }
+                Console.WriteLine("Invalid input. Please enter an integer.");
+            }
+        }
+
+        foreach (int number in numbers)
+        {
+            if (number % 2 == 0)
+            {
+                evenCount++;
+            }
+            else
+            {
+                oddCount++;
+            }
+            if (number % 5 == 0)
+            {
+                divisibleBy5Count++;
+            }
+        }
+
+        Console.WriteLine("\nResults:");
+        Console.WriteLine($"Even numbers: {evenCount}");
+        Console.WriteLine($"Odd numbers: {oddCount}");
+        Console.WriteLine($"Numbers divisible by 5: {divisibleBy5Count}");
+    }
+}

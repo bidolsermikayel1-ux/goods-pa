@@ -1,0 +1,41 @@
+using System;
+using System.Linq;
+using System.Text.RegularExpressions;
+
+public class PasswordStrengthChecker
+{
+    public static void Main(string[] args)
+    {
+        // Get passwords from the user.
+        string[] passwords = new string[5];
+        for (int i = 0; i < 5; i++)
+        {
+            Console.Write($"Enter password {i + 1}: ");
+            passwords[i] = Console.ReadLine();
+        }
+
+        // Check password strength.
+        CheckPasswordStrength(passwords);
+    }
+
+    static void CheckPasswordStrength(string[] passwords)
+    {
+        Console.WriteLine("\nPassword Strength Check:");
+        foreach (string password in passwords)
+        {
+            string strength = CheckPassword(password);
+            Console.WriteLine($"Password: {password}, Strength: {strength}");
+        }
+    }
+
+    static string CheckPassword(string password)
+    {
+        // Basic checks
+        if (password.Length < 8) return "Invalid: Password must be at least 8 characters long.";
+        if (!password.Any(char.IsUpper)) return "Weak: Password must contain at least one uppercase letter.";
+        if (!password.Any(char.IsDigit)) return "Weak: Password must contain at least one digit.";
+        if (!Regex.IsMatch(password, @"[!@#$%^&*()_+{}\[\]:;<>,.?~\\-]")) return "Weak: Password must contain at least one special character.";
+
+        return "Strong"; //All checks passed.
+    }
+}

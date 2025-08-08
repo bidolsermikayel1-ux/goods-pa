@@ -1,0 +1,26 @@
+using System;
+
+public class FruitCounter
+{
+    public static void Main(string[] args)
+    {
+        string[] fruits = new string[5];
+        int count = 0;
+
+        for (int i = 0; i < 5; i++)
+        {
+            Console.Write($"Enter your favorite fruit {i + 1}: ");
+            fruits[i] = Console.ReadLine().ToLower();
+        }
+
+        foreach (string fruit in fruits)
+        {
+            if (fruit == "apple")
+            {
+                count++;
+            }
+        }
+
+        Console.WriteLine($"'Apple' appears {count} times in your favorite fruits.");
+    }
+}

@@ -1,0 +1,48 @@
+using System;
+
+public class EmailValidator
+{
+    public static void Main(string[] args)
+    {
+        string[] emails = new string[5];
+
+        // Get email addresses from the user with input validation.
+        for (int i = 0; i < 5; i++)
+        {
+            Console.Write($"Enter email address {i + 1}: ");
+            emails[i] = Console.ReadLine();
+        }
+
+        // Validate and extract usernames.
+        ValidateAndExtract(emails);
+    }
+
+    static void ValidateAndExtract(string[] emails)
+    {
+        Console.WriteLine("\nEmail Validation and Extraction:");
+        foreach (string email in emails)
+        {
+            if (!IsValidEmail(email))
+            {
+                Console.WriteLine($"Email: {email}, Status: Invalid");
+            }
+            else
+            {
+                string username = ExtractUsername(email);
+                Console.WriteLine($"Email: {email}, Status: Valid, Username: {username}");
+            }
+        }
+    }
+
+    //Helper function to validate email format.
+    static bool IsValidEmail(string email)
+    {
+        return email.Contains("@") && (email.EndsWith(".com") || email.EndsWith(".edu"));
+    }
+
+    //Helper function to extract username from a valid email.
+    static string ExtractUsername(string email)
+    {
+        return email.Substring(0, email.IndexOf("@"));
+    }
+}

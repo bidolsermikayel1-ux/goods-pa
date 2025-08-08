@@ -1,0 +1,87 @@
+using System;
+using System.Collections.Generic;
+
+public class VoterEligibility
+{
+    public static void Main(string[] args)
+    {
+        List<string> names = new List<string>();
+        List<int> ages = new List<int>();
+
+        // Get user input with error handling.
+        for (int i = 0; i < 10; i++)
+        {
+            Console.Write($"Enter name for citizen {i + 1}: ");
+            string name = Console.ReadLine();
+            names.Add(name);
+
+            while (true)
+            {
+                Console.Write($"Enter age for {name}: ");
+                if (int.TryParse(Console.ReadLine(), out int age) && age >= 0 && age <= 120)
+                {
+                    ages.Add(age);
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Invalid age. Please enter an integer between 0 and 120.");
+                }
+            }
+        }
+
+        // Process voter data and display results.
+        List<Voter> voters = ProcessVoterData(names, ages);
+        Console.WriteLine("\nVoter Information:");
+        foreach (Voter voter in voters)
+        {
+            Console.WriteLine($"Name: {voter.Name}, Age: {voter.Age}, Category: {voter.Category}");
+        }
+    }
+
+
+    static List<Voter> ProcessVoterData(List<string> names, List<int> ages)
+    {
+        List<Voter> voters = new List<Voter>();
+        for (int i = 0; i < names.Count; i++)
+        {
+            string name = names[i];
+            int age = ages[i];
+            string category;
+
+            if (age < 18)
+            {
+                category = "Ineligible";
+            }
+            else if (age <= 30)
+            {
+                category = "Young Voter";
+            }
+            else if (age <= 59)
+            {
+                category = "Mid-age Voter";
+            }
+            else
+            {
+                category = "Senior Voter";
+            }
+            voters.Add(new Voter(name, age, category));
+        }
+        return voters;
+    }
+}
+
+// Simple class to represent voter data
+class Voter
+{
+    public string Name { get; set; }
+    public int Age { get; set; }
+    public string Category { get; set; }
+
+    public Voter(string name, int age, string category)
+    {
+        Name = name;
+        Age = age;
+        Category = category;
+    }
+}

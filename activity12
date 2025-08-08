@@ -1,0 +1,73 @@
+using System;
+
+public class MonthlySalesTracker
+{
+    public static void Main(string[] args)
+    {
+        // Get sales data from the user with error handling.
+        float[] monthlySales = new float[12];
+        for (int i = 0; i < 12; i++)
+        {
+            Console.Write($"Enter sales for month {i + 1}: ");
+            while (!float.TryParse(Console.ReadLine(), out monthlySales[i]))
+            {
+                Console.WriteLine("Invalid input. Please enter a number.");
+            }
+        }
+
+        // Analyze sales data.
+        SalesAnalysis analysis = AnalyzeSales(monthlySales);
+
+        // Display results.
+        Console.WriteLine("\nSales Analysis:");
+        Console.WriteLine($"Highest Sales: {analysis.HighestSales} (Month {analysis.HighestMonth})");
+        Console.WriteLine($"Lowest Sales: {analysis.LowestSales} (Month {analysis.LowestMonth})");
+        Console.WriteLine($"Average Sales: {analysis.AverageSales}");
+    }
+
+    static SalesAnalysis AnalyzeSales(float[] sales)
+    {
+        float highestSales = sales[0];
+        int highestMonth = 1;
+        float lowestSales = sales[0];
+        int lowestMonth = 1;
+        float sum = 0;
+
+
+        for (int i = 0; i < sales.Length; i++)
+        {
+            if (sales[i] > highestSales)
+            {
+                highestSales = sales[i];
+                highestMonth = i + 1;
+            }
+            if (sales[i] < lowestSales)
+            {
+                lowestSales = sales[i];
+                lowestMonth = i + 1;
+            }
+            sum += sales[i];
+        }
+
+        return new SalesAnalysis(highestSales, highestMonth, lowestSales, lowestMonth, sum / sales.Length);
+    }
+}
+
+//Helper class to hold analysis results.
+class SalesAnalysis
+{
+    public float HighestSales { get; set; }
+    public int HighestMonth { get; set; }
+    public float LowestSales { get; set; }
+    public int LowestMonth { get; set; }
+    public float AverageSales { get; set; }
+
+    public SalesAnalysis(float highestSales, int highestMonth, float lowestSales, int lowestMonth, float averageSales)
+    {
+        HighestSales = highestSales;
+        HighestMonth = highestMonth;
+        LowestSales = lowestSales;
+        LowestMonth = lowestMonth;
+        AverageSales = averageSales;
+    }
+}

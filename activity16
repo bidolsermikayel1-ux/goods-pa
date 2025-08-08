@@ -1,0 +1,40 @@
+using System;
+
+public class HospitalTriage
+{
+    public static void Main(string[] args)
+    {
+        // Get patient symptoms.
+        string[] symptoms = new string[5];
+        for (int i = 0; i < 5; i++)
+        {
+            Console.Write($"Enter symptoms for patient {i + 1}: ");
+            symptoms[i] = Console.ReadLine().ToLower(); // Convert to lowercase for case-insensitive matching.
+        }
+
+        // Assign patients to departments.
+        AssignDepartments(symptoms);
+    }
+
+    static void AssignDepartments(string[] symptoms)
+    {
+        Console.WriteLine("\nDepartment Assignments:");
+        foreach (string symptom in symptoms)
+        {
+            string department;
+            if (symptom.Contains("fever") || symptom.Contains("cough"))
+            {
+                department = "General Medicine";
+            }
+            else if (symptom.Contains("injury") || symptom.Contains("burn"))
+            {
+                department = "Emergency";
+            }
+            else
+            {
+                department = "Specialist Referral";
+            }
+            Console.WriteLine($"Symptoms: {symptom}, Department: {department}");
+        }
+    }
+}

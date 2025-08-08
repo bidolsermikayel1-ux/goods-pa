@@ -1,0 +1,49 @@
+using System;
+
+public class PasswordAnalyzer
+{
+    public static void AnalyzePasswords(string[] passwords)
+    {
+        // Input validation: Check for null or empty input.
+        if (passwords == null || passwords.Length == 0)
+        {
+            Console.WriteLine("Error: No passwords provided.");
+            return;
+        }
+
+        // Analyze each password.
+        for (int i = 0; i < passwords.Length; i++)
+        {
+            string password = passwords[i];
+            bool isValid = ValidatePassword(password);
+            Console.WriteLine($"Password {i + 1}: {password} is {(isValid ? "Valid" : "Invalid")}");
+        }
+    }
+
+    public static bool ValidatePassword(string password)
+    {
+        // Check minimum length.
+        if (password.Length < 6)
+        {
+            return false;
+        }
+
+        // Check for at least one uppercase letter.
+        bool hasUppercase = false;
+        foreach (char c in password)
+        {
+            if (char.IsUpper(c))
+            {
+                hasUppercase = true;
+                break;
+            }
+        }
+        return hasUppercase;
+    }
+
+    public static void Main(string[] args)
+    {
+        string[] passwords = { "Short", "Password123", "PASSWORD", "AnotherPassword" };
+        AnalyzePasswords(passwords);
+    }
+}

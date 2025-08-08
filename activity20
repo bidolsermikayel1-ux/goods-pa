@@ -1,0 +1,40 @@
+using System;
+
+public class PalindromeDetector
+{
+    public static void Main(string[] args)
+    {
+        // Get five words from the user.
+        string[] words = new string[5];
+        for (int i = 0; i < 5; i++)
+        {
+            Console.Write($"Enter word {i + 1}: ");
+            words[i] = Console.ReadLine();
+        }
+
+        // Check each word for palindrome status.
+        CheckPalindromes(words);
+    }
+
+    static void CheckPalindromes(string[] words)
+    {
+        Console.WriteLine("\nPalindrome Check Results:");
+        foreach (string word in words)
+        {
+            bool isPalindrome = IsPalindrome(word);
+            Console.WriteLine($"{word}: {(isPalindrome? "Palindrome" : "Not a Palindrome")}");
+        }
+    }
+
+    // Function to check if a word is a palindrome.
+    static bool IsPalindrome(string word)
+    {
+        // Remove spaces and convert to lowercase for case-insensitive comparison.
+        string cleanWord = word.Replace(" ", "").ToLower();
+
+        //Efficiently reverse the string using built-in methods.
+        string reversedWord = new string(cleanWord.Reverse().ToArray());
+
+        return cleanWord == reversedWord;
+    }
+}

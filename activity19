@@ -1,0 +1,47 @@
+using System;
+using System.Linq;
+
+public class BudgetAllocator
+{
+    public static void Main(string[] args)
+    {
+        // Expense categories.
+        string[] categories = { "Food", "Rent", "Utilities", "Transport", "Others" };
+        int numCategories = categories.Length;
+
+        // Get budget per category with input validation.
+        double[] budget = new double[numCategories];
+        for (int i = 0; i < numCategories; i++)
+        {
+            Console.Write($"Enter budget for {categories[i]}: ");
+            while (!double.TryParse(Console.ReadLine(), out budget[i]) || budget[i] < 0)
+            {
+                Console.WriteLine("Invalid input. Please enter a non-negative number.");
+            }
+        }
+
+        // Analyze budget and provide suggestions.
+        AnalyzeBudget(categories, budget);
+    }
+
+    static void AnalyzeBudget(string[] categories, double[] budget)
+    {
+        double totalBudget = budget.Sum();
+        double monthlyIncome = 25000; // Set monthly income.
+
+        Console.WriteLine($"\nTotal Budget: {totalBudget}");
+
+        if (totalBudget > monthlyIncome)
+        {
+            Console.WriteLine($"Budget exceeds monthly income ({monthlyIncome}).");
+
+            // Find category with the highest expense.
+            int maxIndex = Array.IndexOf(budget, budget.Max());
+            Console.WriteLine($"Consider reducing expenses in: {categories[maxIndex]}");
+        }
+        else
+        {
+            Console.WriteLine("Budget is within monthly income.");
+        }
+    }
+}

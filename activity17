@@ -1,0 +1,47 @@
+using System;
+
+public class NumberClassification
+{
+    public static void Main(string[] args)
+    {
+        // Get user input with validation
+        int[] numbers = new int[8];
+        for (int i = 0; i < 8; i++)
+        {
+            Console.Write($"Enter whole number {i + 1}: ");
+            while (!int.TryParse(Console.ReadLine(), out numbers[i]) || numbers[i] < 0)
+            {
+                Console.WriteLine("Invalid input. Please enter a non-negative whole number.");
+            }
+        }
+
+        // Process and display results for each number.
+        ClassifyNumbers(numbers);
+    }
+
+    static void ClassifyNumbers(int[] numbers)
+    {
+        Console.WriteLine("\nNumber Classification:");
+        foreach (int num in numbers)
+        {
+            Console.WriteLine($"\nNumber: {num}");
+            Console.WriteLine($"Prime: {IsPrime(num)}");
+            Console.WriteLine($"Binary: {Convert.ToString(num, 2)}");
+            Console.WriteLine($"Even/Odd: {(num % 2 == 0 ? "Even" : "Odd")}");
+        }
+    }
+
+    //Helper function to check if a number is prime.
+    static bool IsPrime(int num)
+    {
+        if (num <= 1) return false;
+        if (num <= 3) return true;
+        if (num % 2 == 0 || num % 3 == 0) return false;
+
+        for (int i = 5; i * i <= num; i = i + 6)
+            if (num % i == 0 || num % (i + 2) == 0)
+                return false;
+
+        return true;
+    }
+}
